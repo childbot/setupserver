@@ -20,5 +20,4 @@ echo "/ip dhcp-client remove 0;
 umount /mnt && \
 echo u > /proc/sysrq-trigger && \
 dd if=chr.img bs=1024 of=/dev/vda && \
-rm chr.img chr.img.zip && \
 echo "Instalasi MikroTik CHR versi $VERSION selesai. Silakan reboot sistem untuk mem-boot dari perangkat yang baru diinstal."
