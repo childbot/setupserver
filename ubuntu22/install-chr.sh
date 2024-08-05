@@ -27,7 +27,7 @@ sudo mount -o loop,offset=512 chr.img /mnt && \
 ADDRESS=$(ip addr show $INTERFACE | grep 'inet ' | awk '{print $2}' | head -n 1) && \
 GATEWAY=$(ip route list | grep default | awk '{print $3}') && \
 echo "/ip dhcp-client remove [find];
-/ip address add address=$ADDRESS interface=[/interface ethernet find where name=$INTERFACE];
+/ip address add address=$ADDRESS interface=ether1;
 /ip route add gateway=$GATEWAY;
 /system identity set name=CHRPerwira;
 /user add name=$USERNAME password=$PASSWORD group=full;
@@ -36,9 +36,8 @@ echo "/ip dhcp-client remove [find];
 /ip service disable [find name=ssh];
 /ip service disable [find name=api];
 /ip dns set servers=1.1.1.1;
-/system license renew level=p1 account=$LICENSE_EMAIL password=$LICENSE_PASSWORD;
-" > /mnt/rw/autorun.scr && \
-sudo umount /mnt && \
-echo u | sudo tee /proc/sysrq-trigger && \
-sudo dd if=chr.img bs=1024 of=/dev/vda && \
+/system license renew level=p1 account=$LICENSE_EMAIL password=$LICENSE_PASSWORD;" > /mnt/rw/autorun.scr && \
+umount /mnt && \
+echo u > /proc/sysrq-trigger && \
+dd if=chr.img bs=1024 of=/dev/vda && \
 echo "Instalasi MikroTik CHR versi $VERSION selesai. Silakan reboot sistem untuk mem-boot dari perangkat yang baru diinstal."
