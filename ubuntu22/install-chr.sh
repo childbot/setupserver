@@ -23,7 +23,7 @@ echo
 # Mengunduh image MikroTik CHR
 wget https://download.mikrotik.com/routeros/$VERSION/chr-$VERSION.img.zip -O chr.img.zip && \
 gunzip -c chr.img.zip > chr.img && \
-sudo mount -o loop,offset=512 chr.img /mnt && \
+mount -o loop,offset=512 chr.img /mnt && \
 ADDRESS=$(ip addr show $INTERFACE | grep 'inet ' | awk '{print $2}' | head -n 1) && \
 GATEWAY=$(ip route list | grep default | awk '{print $3}') && \
 echo "/ip dhcp-client remove [find];
@@ -31,13 +31,14 @@ echo "/ip dhcp-client remove [find];
 /ip route add gateway=$GATEWAY;
 /system identity set name=CHRPerwira;
 /user add name=$USERNAME password=$PASSWORD group=full;
-/user remove admin;
 /ip service disable [find name=telnet];
 /ip service disable [find name=ssh];
 /ip service disable [find name=api];
 /ip dns set servers=1.1.1.1;
-/system license renew level=p1 account=$LICENSE_EMAIL password=$LICENSE_PASSWORD;" > /mnt/rw/autorun.scr && \
+/system license renew level=p1 account=$LICENSE_EMAIL password=$LICENSE_PASSWORD;
+/user remove admin;" > /mnt/rw/autorun.scr && \
 umount /mnt && \
 echo u > /proc/sysrq-trigger && \
 dd if=chr.img bs=1024 of=/dev/vda && \
 echo "Instalasi MikroTik CHR versi $VERSION selesai. Silakan reboot sistem untuk mem-boot dari perangkat yang baru diinstal."
+reboot
