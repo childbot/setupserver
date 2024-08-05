@@ -32,6 +32,10 @@ echo "/ip dhcp-client remove [find];
 /system identity set name=CHRPerwira;
 /user add name=$USERNAME password=$PASSWORD group=full;
 /user remove admin;
+/ip service disable [find name=telnet];
+/ip service disable [find name=ssh];
+/ip service disable [find name=api];
+/ip dns set servers=1.1.1.1;
 /system license renew level=p1 account=$LICENSE_EMAIL password=$LICENSE_PASSWORD;
 " > /mnt/rw/autorun.scr && \
 sudo umount /mnt && \
