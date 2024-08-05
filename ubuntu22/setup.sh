@@ -24,8 +24,6 @@ sudo apt-cache policy docker-ce
 # Menginstal Docker
 sudo apt install -y docker-ce
 
-# Memastikan Docker berjalan
-sudo systemctl status docker
 
 # Menambahkan pengguna Anda ke grup Docker (opsional, agar bisa menjalankan Docker tanpa sudo)
 sudo usermod -aG docker ${USER}
@@ -33,8 +31,9 @@ sudo usermod -aG docker ${USER}
 # Mengaktifkan Docker agar mulai otomatis saat boot
 sudo systemctl enable docker
 
-# Menginstruksikan pengguna untuk logout dan login kembali agar perubahan grup diterapkan
-echo "Instalasi Docker selesai. Silakan logout dan login kembali agar perubahan grup diterapkan."
-
 # Memverifikasi instalasi Docker
 docker --version
+
+# Memastikan Docker berjalan
+sudo systemctl status docker
+
